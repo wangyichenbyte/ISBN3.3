@@ -28,8 +28,8 @@ using namespace cv;
 
 //#define DEBUG
 
-#define DEBUG_THRESHOLD // 二值化调试
-#define DEBUG_RES // 预处理调试
+#define DEBUG_THRESHOLD          // 二值化调试
+#define DEBUG_RES                // 预处理调试
 
 #endif
 
@@ -44,29 +44,32 @@ private:
     // 样本图片的路径
     string sampleImgPath;
 
-    Mat src_image;          // 输入图片
-    Mat src_copy_image;     // 拷贝输入图片
+    Mat src_image;               // 输入图片
+    Mat src_copy_image;          // 拷贝输入图片
     Mat gray_image;
-    Mat threshold_image;    // 处理之后的二值化图片
-    Mat rotated_image;      // 旋转之后的图像
-    Mat res_image;          // 处理完成的图像，提取兴趣框时用
-    Mat ROI_image;          // 提取兴趣框
+    Mat threshold_image;         // 处理之后的二值化图片
+    Mat rotated_image;           // 旋转之后的图像
+    Mat res_image;               // 处理完成的图像，提取兴趣框时用
+    Mat ROI_image;               // 提取兴趣框
 
-    vector<int> rows_element;   // 行ROI感兴趣区域
-    vector<Point> points;       // 用于表示：每一行的像素值大于100像素点的数量
-    vector<PIII> ans;           // 存储答案的容器
-    vector<int> num_area;       // 数字的ROI感兴趣区域，即字符分割
-    vector<PII> num_position;   // 数字的位置信息，用于字符分割
-    vector<Mat> num_ROI_rect;   // 数字的Mat，截取数字的结果
+    vector<int> rows_element;    // 行ROI感兴趣区域
+    vector<Point> points;        // 用于表示：每一行的像素值大于100像素点的数量
+    vector<PIII> ans;            // 存储答案的容器
+    vector<int> num_area;        // 数字的ROI感兴趣区域，即字符分割
+    vector<PII> num_position;    // 数字的位置信息，用于字符分割
+    vector<Mat> num_ROI_rect;    // 数字的Mat，截取数字的结果
 
-    std::string res_str;  // 最终的答案
+    std::string res_str;         // 最终的答案
 
-    double ChNum;       // 字符准确度
+    double ChNum;                // 字符准确度
 
-    double StrNum;      // 字符串准确度
+    double StrNum;               // 字符串准确度
 
-    double average;
+    double average;              // 保存平均亮度
 
+    Range ROI_range;             // y字符兴趣框位置
+
+    Range ROI_range_x;           // x字符兴趣框位置
 private:
 
     // 旋转操作
@@ -95,8 +98,8 @@ private:
 
 public:
 
-    // 构造函数
-    detectSolution(string sample_path) { this->sampleImgPath = sample_path; }
+    // 构造函数,初始化两个参数
+    detectSolution(string sample_path) { this->sampleImgPath = sample_path; this->ROI_range.end = 0, this->ROI_range.start = 0; }
 
     // 获取结果
     string get_res();
